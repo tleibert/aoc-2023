@@ -1,21 +1,10 @@
-use std::{
-    collections::HashMap,
-    io::{self},
-};
+use std::io;
+
+static DIGITS: [&str; 10] = [
+    "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+];
 
 fn main() {
-    let digit_map = HashMap::from([
-        ("zero", 0),
-        ("one", 1),
-        ("two", 2),
-        ("three", 3),
-        ("four", 4),
-        ("five", 5),
-        ("six", 6),
-        ("seven", 7),
-        ("eight", 8),
-        ("nine", 9),
-    ]);
     let mut total = 0;
     for line in io::stdin().lines() {
         let line = line.unwrap();
@@ -24,10 +13,11 @@ fn main() {
             .enumerate()
             .filter_map(|(idx, c)| {
                 c.to_digit(10).or_else(|| {
-                    digit_map
+                    DIGITS
                         .iter()
-                        .find(|(k, _)| line[idx..].starts_with(*k))
-                        .map(|(_, v)| *v)
+                        .enumerate()
+                        .find(|(_, &s)| line[idx..].starts_with(s))
+                        .map(|(idx, _)| idx as u32)
                 })
             })
             .collect();
