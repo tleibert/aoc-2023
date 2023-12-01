@@ -17,7 +17,4 @@ fn main() {
     }
 
     println!("Answer: {total}");
-
-    let items: [i32; 1] = [1];
-    println!("First and last: {:?}", items.iter().first_and_last());
 }
